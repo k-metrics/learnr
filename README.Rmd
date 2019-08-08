@@ -1,0 +1,93 @@
+---
+title: "R初学者のためのチュートリアル"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Japanese Only, in this repository. 
+
+
+# Introduction
+本リポジトリは [データ分析勉強会 <i class="fa fa-external-link"></i>](https://sites.google.com/site/kantometrics/home){target="_blank" title="Google site"} で使用した『RStudioのすゝめ』の講義資料を再整理し`learnr`パッケージによるインタラクティブな学習ができるよう編集しなおした初学者向けのチュートリアルです。このチュートリアルは実際にRのコードを入力して実行することが可能です。
+
+本リポジトリでは、現在、以下のチュートリアルを公開しています。なお、チュートリアルファイルはR3.5.x時代に作成したものですので、多少、古臭い部分もあります。    
+
+
+File          | Description
+--------------|---------------------
+tutorial.Rmd  | 演算子、予約語、変数、変数操作、条件処理などRの基礎
+tutorial2.Rmd | 基本統計量、グラフ描画、基本的な検定
+
+
+## 動作環境
+本リポジトリにあるチュートリアルを実行するには以下のアプリケーションとRのパッケージが必要となります。
+
+
+Name    | Version        | Memo
+--------|----------------|------------------
+R       | 3.6.0 or later | 
+RStudio | 1.1 or later   | 
+git     | newest         | 本リポジトリをクローンする場合
+docker  | newest         | Dockerコンテナイメージを利用する場合
+tidyverse | newest       | R package
+learnr    | newest       | R package
+
+
+RStuidoについては [こちら <i class="fa fa-external-link"></i>](https://k-metrics.github.io/cabinet/env_overall.html){target="_blank" title=""} を参考にローカル環境を構築するか、 [こちら <i class="fa fa-external-link"></i>](https://hub.docker.com/r/mzdgnk/mlwr/builds){target="_blank" title="Docker Hub"} のDockerコンテナイメージを利用してください。なお、Dockerコンテナイメージには必要なアプリケーションならびにRのパッケージがインストール済です。    
+
+既にRStudio環境がある場合は以下のコマンドで必要なパッケージをインストールしてください。
+
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+install.packages("learnr")
+```
+
+
+### 注意
+Windows環境ではチュートリアルが正しく表示されない場合があります。この場合は、Dockerコンテナイメージを利用してください。
+
+
+## 実行方法
+チュートリアルを実行するにはローカルに本リポジトリのファイルが必要です。
+
+
+1. 本リポジトリをクローンします
+1. クローンしたフォルダをプロジェクトフォルダに指定しプロジェクトを作成します
+1. RStudioから作成したプロジェクトを開きます
+1. [File]ペインから任意のチュートリアルファイルを開きます
+1. エディタ上段に表示される**[Run Document]**というボタンをクリックします
+1. チュートリアルファイルがレンダリングされ[Viewer]ペインにチュートリアルが表示されます
+
+
+チュートリアルの実行にはローカルホスト(127.0.0.1)上の`shiny`サーバが利用されていますので、[Viewer]ペインにある**[Show in new window]**をクリックしてブラウザ上で実行することも可能です。  
+　  
+`git`を使うのが難しい場合は、以下の手順で実行してください
+
+
+1. RStudioで任意のプロジェクトを作成します
+1. 本リポジトリをZIP形式でダウンロードします
+1. ダウンロードしたZIP形式のファイルの中身をプロジェクトフォルダにコピーします
+1. [File]ペインから任意のチュートリアルファイルを開きます
+1. エディタ上段に表示される**[Run Document]**というボタンをクリックします
+1. チュートリアルファイルがレンダリングされ[Viewer]ペインにチュートリアルが表示されます
+
+
+## チュートリアルの使い方
+* **[Code]**と左上に書いてある欄に実行コードを記述し右側の**[Run Code]**ボタンを押せば記述した（記述されている)
+コードが実行されます。
+* コードが間違っている場合はエラーが表示されます。
+* 一部のコードは既に記述済ですが、コードを追加・記入したい場合は最終行の行末にカーソルを持っていき改行することでコードの追加ができます。
+* 学習結果は記録されますがリセットしたい場合は左側見出しのの一番下にある**[Start Over]** をクリックしてください。
+
+
+　  
+以上
+
+
+　  
+不明点は [データ分析勉強 <i class="fa fa-external-link"></i>](https://sites.google.com/site/kantometrics/home){target="_blank" title="Google site"} まで、または、本リポジトリのissues にて問い合わせください。
