@@ -32,7 +32,7 @@ Japanese Only, in this repository.
 RStuidoについては [こちら
 <i class="fa fa-external-link"></i>](https://k-metrics.github.io/cabinet/env_overall.html)
 を参考にローカル環境を構築するか、 [こちら
-<i class="fa fa-external-link"></i>](https://hub.docker.com/r/mzdgnk/mlwr/builds)
+<i class="fa fa-external-link"></i>](https://hub.docker.com/r/mzdgnk/mlwr)
 のDockerコンテナイメージを利用してください。なお、Dockerコンテナイメージには必要なアプリケーションならびにRのパッケージがインストール済です。
 
 既にRStudio環境がある場合は以下のコマンドで必要なパッケージをインストールしてください。
