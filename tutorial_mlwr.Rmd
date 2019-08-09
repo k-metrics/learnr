@@ -1,0 +1,418 @@
+---
+title: "R Basics Tutorial for mlwr"
+output:
+  learnr::tutorial:
+    df_print: "paged"
+    highlight: textmate
+    md_extensions: -ascii_identifiers
+runtime: shiny_prerendered
+---
+
+<!-- 必要なパッケージ
+本チュートリアルファイルを実行するためには以下のパッケージが必要です。必ず
+インストールされていることを確認して下さい。
+
+knitr, learnr, rmarkdown, shiny, tidyverse
+
+インストールされていない場合、以下のページを参考にパッケージをインストール
+してください。
+-->
+
+```{r setup, include=FALSE}
+# 共通chunkオプションの指定
+knitr::opts_chunk$set(warning = FALSE, echo = TRUE)
+
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+
+require(learnr)
+require(tidyverse)
+
+if (getRversion() >= "3.6.0") {
+  RNGversion("3.5.3")     # R >= 3.6.0の場合のみ（前方互換性確保のため）
+}
+
+usedcars <- read.csv("./data/usedcars.csv", stringsAsFactors = TRUE,
+                     encoding = "UTF-8")
+wbcd <- read.csv("./data/wisc_bc_data.csv", stringsAsFactors = FALSE,
+                 encoding = "UTF-8")
+
+recipe <- readxl::read_xlsx("./data/WizardUnite.xlsx", sheet = "Recipe")
+```
+
+## Introduction
+本ファイルは『Rによる機械学習』（以降、テキスト）のサンプルコードを実行する上で必要となるRの基礎を学ぶためのチュートリアルファイルです。[RStudio][RS] 環境で実際にRのコードを入力して実行し試すことが可能です。  
+　  
+
+### 実行方法
+本ファイルを[RStudio][RS]で開くと上段に**[Run Document]**というボタンが表示されますので、これをクリックしてください。コンパイル後にローカルホスト(127.0.0.1)上に`shiny`サーバが起動し**[Viewer]**ウィンドウに実行可能なファイルが表示されます。ファイルが表示されたら**[Code]**と左上に書いてある欄に実行コードを記述し右側の**[Run Code]**ボタンを押せば記述されている（記述した)
+コードが実行されます。当然、間違っている場合はエラーがでます。コードを追加・記入したい場合は最終行の行末にカーソルを持っていき改行することで追加ができます。 学習結果は記録されますがリセットしたい場合はTOCの一番下にある**[Start Over]** をクリックしてください。  
+　  
+
+### チュートリアルについて
+本チュートリアルは、とにかくやってみようというスタンスですので、手を動かすことを前提に構成しています。  
+
+* 変数の扱い方
+    * ベクトル変数、マトリクス型変数、リスト型変数、データフレーム型変数
+    * 変数で扱えるデータの型
+* データのインポート
+* データフレームの扱い方（Working with dplyr）
+    * 『ハリー・ポッター：魔法同盟』で学ぶデータハンドリング
+
+　  
+
+### データファイルについて
+本チュートリアルで利用するファイルはテキストのサンプルファイルならびにオリジナルファイルです。テキストのサンプルファイルは [GitHub <i class="fa fa-external-link"></i>](https://github.com/dataspelunking/MLwR){target="_blank" title="GitHub"} から入手し`./data`フォルダに配置してください。  
+
+
+
+## Basic Operation
+### ベクトル演算
+Rの特徴はベクトル演算が可能な点です。まずは、以下の加算を実行してみましょう。
+
+```{r basic_operation_sum, exercise=TRUE}
+c(1, 2, 3, 4, 5) + c(1, 2, 1, 2, 1)
+```
+
+このようにループ処理を使わなくても計算ができます。  
+次に以下の乗算を実行してみましょう。
+
+```{r basic_operation_times, exercise=TRUE}
+c(1, 2, 3, 4, 5) * c(1, 2, 1, 2, 1)
+```
+
+加算と同様に処理できます。  
+では、減算と除算を以下に入力して実行してみてください。
+
+```{r basic_operation_diff, exercise=TRUE}
+
+```
+
+```{r basic_operation_diff-solution}
+c(1, 2, 3, 4, 5) - c(1, 2, 1, 2, 1)
+c(1, 2, 3, 4, 5) / c(1, 2, 1, 2, 1)
+```
+
+　  
+
+### 変数の作成
+`c`関数はベクトル変数を作成する関数で、以下のように代入することで変数になります。
+
+```{r, eval=FALSE}
+a <- c(1, 2, 3, 4, 5) 
+b <- c(1, 2, 1, 2, 1)
+```
+
+```{r basic_operation_c}
+a <- c(1, 2, 3, 4, 5) 
+b <- c(1, 2, 1, 2, 1)
+```
+
+参照する場合は、変数名のみを記述して実行すれば変数の値が表示されます。
+
+```{r basic_operation_c_var, exercise=TRUE, exercise.setup = "basic_operation_c"}
+a
+b
+```
+
+
+## Vector Operation
+### 位置による参照
+ベクトル変数のを参照する基本的な方法は、参照したい位置や範囲を指定する方法です。  
+最初に以下のようなベクトル変数`x`を作成します。
+```{r, eval=FALSE}
+x <- c(1:10)
+```
+
+```{r vector_operation_x}
+x <- c(1:10)
+```
+
+作成したベクトル変数とその構造を確認してみます。構造を確認するにはテキストにあるように`str`関数を用います。
+
+```{r vector_operation_x_str, exercise=TRUE, exercise.setup = "vector_operation_x"}
+x
+str(x)
+```
+
+ベクトル変数`x`は10個の`int`型（整数型）の値を持った変数だということが分かります。  
+では、この変数の特定の場所にある値を参照してみましょう。
+
+```{r vector_operation_x_by_position, exercise=TRUE, exercise.setup = "vector_operation_x"}
+x[4]
+```
+
+特定の範囲の範囲を参照した場合は、`:`オペレータを使って範囲を指定します。
+
+```{r vector_operation_x_by_range, exercise=TRUE, exercise.setup = "vector_operation_x"}
+x[2:4]
+```
+
+では、位置の指定に`-`演算子を用いるとどのようになるのか、次のコードで確認してみましょう。
+
+```{r vector_operation_x_by_omit, exercise=TRUE, exercise.setup = "vector_operation_x"}
+x[-4]
+x[-(2:4)]
+```
+
+このように`-`演算子を用いた場合は指定した位置または範囲を除いた値を参照することができます。  
+では、特定の条件を満たした値だけを参照するにはどのように指定すべきでしょうか？例えば、5より小さい値のみを参照（抽出）してみてください。
+
+```{r vector_operation_x_by_if, exercise=TRUE, exercise.setup = "vector_operation_x"}
+
+```
+
+```{r vector_operation_x_by_if-solution}
+x[x < 5]
+```
+
+
+## Matrix Operation
+### 位置による参照
+ベクトル変数の拡張系にマトリクス型（行列型）変数があります。マトリクス型変数を作成するには`matrix`関数を用いて、値と行数 or/and 列数を指定します。
+```{r, eval=FALSE}
+m <- matrix(c(1:9), nrow = 3)
+```
+
+```{r matrix_operation_m}
+m <- matrix(c(1:9), nrow = 3)
+```
+
+作成したマトリクス型変数とその構造を確認してみます。構造を確認するのはベクトル変数の場合と同じく`str`関数を用います。
+
+```{r matrix_operation_m_str, exercise=TRUE, exercise.setup = "matrix_operation_m"}
+m
+str(m)
+```
+
+このようにマトリクス型変数はベクトル変数の特殊な形態と言えます。ベクトル変数の展開はデフォルトでは列方向から行われる点に注意してください。  
+行方向から展開したい場合は`byrow`オプションを指定します。
+
+```{r matrix_operation_m_byrow, exercise=TRUE}
+matrix(c(1:9), nrow = 3, byrow = TRUE)
+```
+
+では、ベクトル変数と同様にマトリクス型変数の値を参照してみましょう。基本的にはベクトル変数と同じですが、上記にあるように`[ , ]`で表示されているように`,`を指定する点に留意してください。
+
+```{r matrix_operation_m_by_row, exercise=TRUE, exercise.setup = "matrix_operation_m"}
+m[2, ]
+```
+
+上記のように`,`の前に数字を指定すると行が参照されます。
+
+```{r matrix_operation_m_by_col, exercise=TRUE, exercise.setup = "matrix_operation_m"}
+m[, 3]
+```
+
+逆に`,`の後に数字を指定すると列が参照されます。  
+両方を指定すると
+
+```{r matrix_operation_m_by_position, exercise=TRUE, exercise.setup = "matrix_operation_m"}
+m[2, 3]
+```
+
+特定の位置の値を参照します。  
+また、ベクトル変数と同様に範囲で指定すると
+
+```{r matrix_operation_m_by_range, exercise=TRUE, exercise.setup = "matrix_operation_m"}
+m
+m[1:2, ]
+m[, 2:3]
+m[1:2, 2:3]
+```
+
+
+`-`演算を指定した場合もベクトル変数と同様の動きになります。
+
+```{r matrix_operation_m_by_omit, exercise=TRUE, exercise.setup = "matrix_operation_m"}
+m
+m[-2, ]
+m[, -3]
+m[-2, -(2:3)]
+```
+
+
+## List Operation
+自由度の高い変数にリスト型変数があります。リスト型変数は数が異なり、かつ、異なったデータ型のベクトル変数を複数格納することができるので、様々な関数の返り値に使われます。リスト型変数を作成するには`list`関数を用いて以下のように指定します。
+```{r, eval=FALSE}
+l <- list(x = 1:5, y = c("a", "b"))
+```
+
+```{r list_operation_l}
+l <- list(x = 1:5, y = c("a", "b"))
+```
+
+```{r list_operation_l_str, exercise=TRUE, exercise.setup = "list_operation_l"}
+l
+str(l)
+```
+
+リスト型変数における値の参照には複数の方法があります。
+　  
+
+### 位置による参照
+ベクトル変数やマトリクス型変数と同様に位置による参照が可能です。
+
+```{r list_operation_l_by_position, exercise=TRUE, exercise.setup = "list_operation_l"}
+l[2]
+l[[2]]
+```
+
+上記の二つの参照は似て非なる参照方法です。どう異なるのか`str`関数で構造を`class`関数でオブジェクトクラスを確認してみましょう。
+
+```{r list_operation_l_by_p_str, exercise=TRUE, exercise.setup = "list_operation_l"}
+str(l[2])
+str(l[[2]])
+```
+
+
+```{r list_operation_l_by_p_class, exercise=TRUE, exercise.setup = "list_operation_l"}
+class(l[2])
+class(l[[2]])
+```
+
+　  
+
+### 名前による参照
+リスト型変数は名前がつけられている場合、名前で参照することができますが、これも位置による参照と同じで返り値は似て非なるものです。
+
+```{r list_operation_l_by_name, exercise=TRUE, exercise.setup = "list_operation_l"}
+l$y
+l["y"]
+```
+
+
+
+## Data Frames Operation
+最も使われる変数としてデータフレーム型変数（単にデータフレームと呼ばれることの方が多い）があります。データフレームは **等長である** 複数の異なるデータ型のベクトル変数を格納することができます。データフレームを作成するには`data.frame`関数を用いて以下のように指定します。
+```{r, eval=FALSE}
+df <- data.frame(x = 1:3, y = c("a", "b", "c"))
+```
+
+```{r df_operation_df}
+df <- data.frame(x = 1:3, y = c("a", "b", "c"))
+```
+
+```{r df_operation_df_str, exercise=TRUE, exercise.setup = "df_operation_df"}
+df
+str(df)
+```
+
+不等長の指定をした場合はどのようになるでしょうか？
+```{r df_operation_df_diff, exercise=TRUE}
+data.frame(x = 1:5, y = c("a", "b", "c"))
+```
+
+　  
+
+### 位置による参照
+基本的にはマトリクス型と同じだと考えてください。
+
+```{r df_operation_l_by_pos, exercise=TRUE, exercise.setup = "df_operation_df"}
+df[1]
+df[1, ]
+df[, 1]
+df[1, 1]
+```
+
+　  
+
+### 名前による参照
+データフレームは名前で参照することの方が多いですが、これも位置による参照と同じで返り値は似て非なるものです。
+```{r df_operation_l_by_name, exercise=TRUE, exercise.setup = "df_operation_df"}
+df$x
+df["x"]
+```
+
+`str`関数や`class`関数での確認は省略します。
+
+
+
+## Import Data
+分析対象データはファイルからインポートする場合が多いと思います。例えば、テキスト第2章で使用している`usedcars.csv`ファイルからデータをインポートするには`read.csv`関数を使うのが一般的です。
+
+```{r, eval=FALSE}
+usedcars <- read.csv("./data/usedcars.csv", stringsAsFactors = TRUE,
+                     encoding = "UTF-8")
+```
+
+なお、日本語版Windows環境では、上記のように`encording`オプションを明示的に指定することをおすゝめします。
+
+```{r}
+usedcars
+```
+
+チュートリアル環境ではワーキングディレクトリが実行毎にランダムに変化するため相対パスが使えないためGitHubのリソースを直接参照しています。
+
+```{r, eval=FALSE}
+usedcars.csv <- "https://raw.githubusercontent.com/dataspelunking/MLwR/master/Machine%20Learning%20with%20R%20(2nd%20Ed.)/Chapter%2002/usedcars.csv"
+```
+　  
+```{r import_csv}
+usedcars.csv <- "https://raw.githubusercontent.com/dataspelunking/MLwR/master/Machine%20Learning%20with%20R%20(2nd%20Ed.)/Chapter%2002/usedcars.csv"
+```
+
+```{r import_read.csv, exercise=TRUE,  exercise.setup = "import_csv"}
+usedcars <- read.csv(usedcars.csv, stringsAsFactors = TRUE,
+                     encoding = "UTF-8")
+
+usedcars
+```
+
+　  
+
+### Excelファイルをインポートする
+`readxl`パッケージを用いるとxlsファイルとxlsxファイルを直接インポートすることができます。シート名、または、シート番号を指定することで任意のシートからのインポートできます。
+```{r, eval=FALSE}
+recipe <- readxl::read_xlsx("./data/WizardUnite.xlsx", sheet = "Recipe")
+```
+
+```{r}
+recipe
+```
+
+
+
+## Working with dplyr
+
+
+　  
+
+### 因子型に変換する
+上記のように`stringAsFactors`オプションを指定していますので、文字である`model`と`color`は因子型に変換されています。一方、年式を示す`year`は数値型（整数型）になっていますので、以下のコードを正しく記述して`year`を因子型に変換してみましょう。
+
+
+```{r dplyr_mutate, exercise=TRUE}
+library(tidyverse)
+
+usedcars %>% 
+  dplyr::mutate(year = )
+```
+
+```{r dplyr_mutate-solution}
+usedcars %>% 
+  dplyr::mutate(year = factor(year))
+```
+
+このように`dplyr::mutate`関数は
+
+
+## License
+![Sampo Suzuki][CCI]
+[CC BY-NC-SA 4.0][CC], Sampo Suzuki [`r format(Sys.time(), format = '%F %H:%M(%Z)')`]
+
+
+[0]: https://sites.google.com/site/kantometrics/ "データ分析勉強会"
+[CC]: http://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja "CC BY-NC-SA 4.0"
+[CCI]: https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC BY-NC-SA 4.0 icon"
+[RS]: https://www.rstudio.com/ "RStudio"
+
+<!-- Books -->
+[B1]: http://www.tokyo-tosho.co.jp/books/978-4-489-02227-2/ "統計学基礎"
+[B2]: http://www.kyoritsu-pub.co.jp/bookdetail/9784320112414 "Rで楽しむ統計"
+[B3]: https://book.mynavi.jp/ec/products/detail/id=39763 "みんなのR"
+[B4]: http://gihyo.jp/book/2017/978-4-7741-8812-6 "パーフェクトR"
+
+<!-- Net Community -->
+[C1]: http://qiita.com/uri/items/5583e91bb5301ed5a4ba "R-wakalang"
+[C2]: http://www.okadajp.org/RWiki/ "RjpWiki"
+[C3]: http://seekr.jp/ "seek R"
