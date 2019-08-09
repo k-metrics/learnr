@@ -38,3 +38,4 @@ rsconnect/
 # Ommit files
 *.html
 *_omit/*
+*.Rproj
