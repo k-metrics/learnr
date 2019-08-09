@@ -335,13 +335,9 @@ usedcars <- read.csv("./data/usedcars.csv", stringsAsFactors = TRUE,
                      encoding = "UTF-8")
 ```
 
-なお、日本語版Windows環境では、上記のように`encording`オプションを明示的に指定することをおすゝめします。
+なお、日本語版Windows環境では、上記のように`encording`オプションを明示的に指定することをおすゝめします。  
 
-```{r}
-usedcars
-```
-
-チュートリアル環境ではワーキングディレクトリが実行毎にランダムに変化するため相対パスが使えないためGitHubのリソースを直接参照しています。
+チュートリアル環境ではワーキングディレクトリが実行毎にランダムに変化するので相対パスが使えず、絶対パスを利用しています。
 
 ```{r, eval=FALSE}
 usedcars.csv <- "https://raw.githubusercontent.com/dataspelunking/MLwR/master/Machine%20Learning%20with%20R%20(2nd%20Ed.)/Chapter%2002/usedcars.csv"
