@@ -1,4 +1,4 @@
-R初学者のためのチュートリアル
+初学者のためのチュートリアル
 ================
 
 Japanese Only, in this repository.
@@ -16,24 +16,30 @@ Japanese Only, in this repository.
 | tutorial.Rmd  | 演算子、予約語、変数、変数操作、条件処理などRの基礎 |
 | tutorial2.Rmd | 基本統計量、グラフ描画、基本的な検定         |
 
+　
+
 ## 動作環境
 
 本リポジトリにあるチュートリアルを実行するには以下のアプリケーションとRのパッケージが必要となります。
 
-| Name      | Version        | Memo                  |
-| --------- | -------------- | --------------------- |
-| R         | 3.6.0 or later |                       |
-| RStudio   | 1.1 or later   |                       |
-| git       | newest         | 本リポジトリをクローンする場合       |
-| docker    | newest         | Dockerコンテナイメージを利用する場合 |
-| tidyverse | newest         | R package             |
-| learnr    | newest         | R package             |
+| Name      | Version      | Memo                                 |
+| --------- | ------------ | ------------------------------------ |
+| R         | N/A          | `learnr`パッケージの動作環境を満たすこと<sup>1</sup> |
+| RStudio   | 1.1 or later |                                      |
+| git       | newest       | 本リポジトリをクローンする場合                      |
+| docker    | newest       | Dockerコンテナイメージを利用する場合                |
+| tidyverse | newest       | R package                            |
+| learnr    | newest       | R package                            |
 
+<sup>1</sup> チュートリアルの動作確認はR 3.6.x環境で行っています
+
+　  
 RStuidoについては [こちら
 <i class="fa fa-external-link"></i>](https://k-metrics.github.io/cabinet/env_overall.html)
 を参考にローカル環境を構築するか、 [こちら
 <i class="fa fa-external-link"></i>](https://hub.docker.com/r/mzdgnk/mlwr)
-のDockerコンテナイメージを利用してください。なお、Dockerコンテナイメージには必要なアプリケーションならびにRのパッケージがインストール済です。
+のDockerコンテナイメージ（mlwr or
+tidymodels）を利用してください。なお、Dockerコンテナイメージには必要なアプリケーションならびにRのパッケージがインストール済です。
 
 既にRStudio環境がある場合は以下のコマンドで必要なパッケージをインストールしてください。
 
@@ -42,9 +48,13 @@ install.packages("tidyverse")
 install.packages("learnr")
 ```
 
+　
+
 ### 注意
 
-Windows環境ではチュートリアルが正しく表示されない場合があります。この場合は、Dockerコンテナイメージを利用してください。
+Windows環境ではチュートリアルが正しく表示されない場合があります。この場合は、Dockerコンテナイメージを利用してください。なお、shinyサーバによるチュートリアルの公開は予定しておりませんので、shinyサーバに実装されたい方は本リポジトリのライセンスを遵守の上でご自由に。
+
+　
 
 ## 実行方法
 
@@ -65,9 +75,11 @@ Windows環境ではチュートリアルが正しく表示されない場合が�
 1.  RStudioで任意のプロジェクトを作成します
 2.  本リポジトリをZIP形式でダウンロードします
 3.  ダウンロードしたZIP形式のファイルの中身をプロジェクトフォルダにコピーします
-4.  \[File\]ペインから任意のチュートリアルファイルを開きます
+4.  **\[File\]** ペインから任意のチュートリアルファイルを開きます
 5.  エディタ上段に表示される **\[Run Document\]** というボタンをクリックします
 6.  チュートリアルファイルがレンダリングされ\[Viewer\]ペインにチュートリアルが表示されます
+
+　
 
 ## チュートリアルの使い方
 
@@ -83,4 +95,4 @@ Windows環境ではチュートリアルが正しく表示されない場合が�
 　  
 不明点は [データ分析勉強
 <i class="fa fa-external-link"></i>](https://sites.google.com/site/kantometrics/home)
-まで、または、本リポジトリのissues にて問い合わせください。
+まで、または、本リポジトリのissues にてお問い合わせください。
