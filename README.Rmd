@@ -1,5 +1,5 @@
 ---
-title: "R初学者のためのチュートリアル"
+title: "初学者のためのチュートリアル"
 output: github_document
 ---
 
@@ -22,6 +22,7 @@ File          | Description
 tutorial.Rmd  | 演算子、予約語、変数、変数操作、条件処理などRの基礎
 tutorial2.Rmd | 基本統計量、グラフ描画、基本的な検定
 
+　  
 
 ## 動作環境
 本リポジトリにあるチュートリアルを実行するには以下のアプリケーションとRのパッケージが必要となります。
@@ -29,15 +30,17 @@ tutorial2.Rmd | 基本統計量、グラフ描画、基本的な検定
 
 Name    | Version        | Memo
 --------|----------------|------------------
-R       | 3.6.0 or later | 
+R       | N/A            | `learnr`パッケージの動作環境を満たすこと^1^
 RStudio | 1.1 or later   | 
 git     | newest         | 本リポジトリをクローンする場合
 docker  | newest         | Dockerコンテナイメージを利用する場合
 tidyverse | newest       | R package
 learnr    | newest       | R package
 
+^1^ チュートリアルの動作確認はR 3.6.x環境で行っています
 
-RStuidoについては [こちら <i class="fa fa-external-link"></i>](https://k-metrics.github.io/cabinet/env_overall.html){target="_blank" title=""} を参考にローカル環境を構築するか、 [こちら <i class="fa fa-external-link"></i>](https://hub.docker.com/r/mzdgnk/mlwr){target="_blank" title="Docker Hub"} のDockerコンテナイメージを利用してください。なお、Dockerコンテナイメージには必要なアプリケーションならびにRのパッケージがインストール済です。    
+　  
+RStuidoについては [こちら <i class="fa fa-external-link"></i>](https://k-metrics.github.io/cabinet/env_overall.html){target="_blank" title=""} を参考にローカル環境を構築するか、 [こちら <i class="fa fa-external-link"></i>](https://hub.docker.com/r/mzdgnk/mlwr){target="_blank" title="Docker Hub"} のDockerコンテナイメージ（mlwr or tidymodels）を利用してください。なお、Dockerコンテナイメージには必要なアプリケーションならびにRのパッケージがインストール済です。    
 
 既にRStudio環境がある場合は以下のコマンドで必要なパッケージをインストールしてください。
 
@@ -47,10 +50,12 @@ install.packages("tidyverse")
 install.packages("learnr")
 ```
 
+　  
 
 ### 注意
-Windows環境ではチュートリアルが正しく表示されない場合があります。この場合は、Dockerコンテナイメージを利用してください。
+Windows環境ではチュートリアルが正しく表示されない場合があります。この場合は、Dockerコンテナイメージを利用してください。なお、shinyサーバによるチュートリアルの公開は予定しておりませんので、shinyサーバに実装されたい方は本リポジトリのライセンスを遵守の上でご自由に。
 
+　  
 
 ## 実行方法
 チュートリアルを実行するにはローカルに本リポジトリのファイルが必要です。
@@ -72,10 +77,11 @@ Windows環境ではチュートリアルが正しく表示されない場合が�
 1. RStudioで任意のプロジェクトを作成します
 1. 本リポジトリをZIP形式でダウンロードします
 1. ダウンロードしたZIP形式のファイルの中身をプロジェクトフォルダにコピーします
-1. [File]ペインから任意のチュートリアルファイルを開きます
+1. **[File]** ペインから任意のチュートリアルファイルを開きます
 1. エディタ上段に表示される **[Run Document]** というボタンをクリックします
 1. チュートリアルファイルがレンダリングされ[Viewer]ペインにチュートリアルが表示されます
 
+　  
 
 ## チュートリアルの使い方
 * **[Code]** と左上に書いてある欄に実行コードを記述し右側の **[Run Code]** ボタンを押せば記述した（記述されている)
@@ -90,4 +96,4 @@ Windows環境ではチュートリアルが正しく表示されない場合が�
 
 
 　  
-不明点は [データ分析勉強 <i class="fa fa-external-link"></i>](https://sites.google.com/site/kantometrics/home){target="_blank" title="Google site"} まで、または、本リポジトリのissues にて問い合わせください。
+不明点は [データ分析勉強 <i class="fa fa-external-link"></i>](https://sites.google.com/site/kantometrics/home){target="_blank" title="Google site"} まで、または、本リポジトリのissues にてお問い合わせください。
