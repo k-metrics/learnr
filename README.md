@@ -64,7 +64,7 @@ binder](https://mybinder.org/v2/gh/k-metrics/learnr/master?urlpath=rstudio)
 
 ## 注意
 
-　Windows環境ではチュートリアルが正しく表示されない場合があります。この場合は binder を利用してください。
+　Windows環境の RStudio ではチュートリアルが正しく表示されない場合があります。この場合は binder を利用してください。
 
 　
 

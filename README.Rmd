@@ -56,7 +56,7 @@ tutorial_tidy.Rmd | `dplyr` and `tidyr`
 　  
 
 ## 注意
-　Windows環境ではチュートリアルが正しく表示されない場合があります。この場合は binder を利用してください。  
+　Windows環境の RStudio ではチュートリアルが正しく表示されない場合があります。この場合は binder を利用してください。  
 
 　  
 
