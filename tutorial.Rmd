@@ -6,6 +6,8 @@ output:
     highlight: textmate
     md_extensions: -ascii_identifiers
 runtime: shiny_prerendered
+description: > 
+  R Basics
 ---
 
 <!-- 必要なパッケージ
