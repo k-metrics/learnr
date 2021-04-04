@@ -1,4 +1,4 @@
-FROM kmetrics/jbinder
+FROM kmetrics/jbinder:4.0.3
 
 # Copy your repository contents to the image
 COPY --chown=rstudio:rstudio . ${HOME}
