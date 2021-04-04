@@ -1,7 +1,7 @@
 FROM kmetrics/jbinder:4.0.3
 
-ARG NB_USER rstudio
-ARG NB_UID 1000
+ARG NB_USER=rstudio
+ARG NB_UID=1000
 ENV VENV_DIR /srv/venv
 ENV USER ${NB_USER}
 ENV NB_UID ${NB_UID}
